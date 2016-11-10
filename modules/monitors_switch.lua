@@ -8,8 +8,10 @@ local position = import('utils/position')
 local monitors = import('utils/monitors')
 
 local function init_module()
+    local mash = config:get("monitors_switch.mash", { "ctrl", "shift", "cmd" })
+    local key = config:get("monitors_switch.key", "SPACE")
 
-    hotkey.bind({ "ctrl", "alt", "cmd" }, "RETURN", function()
+    hotkey.bind(mash, key, function()
         local win = window.focusedWindow()
         if win == nil then
             return
