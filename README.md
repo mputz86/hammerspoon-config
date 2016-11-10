@@ -27,6 +27,7 @@ cp config.example.lua config.lua
  * `utils/match_dialgoue.lua` - Utility to create a specialized text view that can be used to do fuzzy match navigating (or menus or whatever.. see `utils/fuzzy_match.lua`, and `modules/app_selector.lua`).
  * `utils/nudge.lua` - Utility functions to nudge a window. Thanks @josheschulz.
  * `utils/music/*.lua` - Utility functions for controlling Spotify, iTunes and Rdio.
+ * `utils/resize` - Utility functions for resizing a window dependent on its current position.
 
 ### Modules
 
@@ -40,6 +41,8 @@ cp config.example.lua config.lua
 * `modules/fullscreen.lua` - Universal shortcut to toggle full screen. (CMD-CTRL-A)
 * `modules/slide.lua` - Handles nudging windows via `utils/nudge.lua`. (CMD-CTRL-ALT-<Arrow>) Thanks @josheschulz.
 * `modules/hop.lua` - Handles focusing windows in relative directions. (CMD-CTRL-ALT-SHIFT-<Arrow>) Thanks @josheschulz.
+* `modules/resize.lua` - Handles resizing windows dependent on its current position.
+* `modules/monitors_switch.lua` - Handles rotating through available monitors with current window.
 
 
 ### License
