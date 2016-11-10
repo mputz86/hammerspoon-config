@@ -1,11 +1,16 @@
 local alert = require 'hs.alert'
 local window = require 'hs.window'
+local grid = require 'hs.grid'
 
 local monitors = import('utils/monitors')
 
 local resize = {}
 local horizontalSplits = config:get("resize.horizontal_splits", 6)
 local verticalSplits = config:get("resize.vertical_splits", 4)
+
+-- workaround due to incorrect movement of windows to borders of monitor
+local allowedPixelOffset = 20
+local pixelOffsetFix = 5
 
 function resize.down(d)
   local win = window.focusedWindow()
@@ -33,7 +38,7 @@ function resize.down(d)
         h = newH,
         w = d.w,
     }
-  elseif d.y + d.h == dimensions.y + dimensions.h and d.h + dostep < dimensions.h then
+  elseif d.y + d.h >= dimensions.y + dimensions.h - allowedPixelOffset and d.h + dostep < dimensions.h then
     local newY = d.y + dostep
     local newH = dimensions.h + dimensions.y - newY
     return {
@@ -42,7 +47,7 @@ function resize.down(d)
         h = newH,
         w = d.w,
     }
-  elseif d.y + d.h == dimensions.y + dimensions.h then
+  elseif d.y + d.h >= dimensions.y + dimensions.h - allowedPixelOffset then
     local newY = dimensions.y + dostep
     local newH = dimensions.h - dostep
     return {
@@ -72,7 +77,7 @@ function resize.up(d)
   local dimensions = monitors.get_screen_dimensions(screen)
   local dostep = math.ceil(dimensions.h / verticalSplits)
 
-  if d.y == dimensions.y and d.h - dostep > 0 then
+  if d.y == dimensions.y and d.h - dostep > dimensions.x then
     local newH = d.h - dostep
     return {
         x = d.x,
@@ -88,7 +93,7 @@ function resize.up(d)
         h = newH,
         w = d.w,
     }
-  elseif d.y + d.h == dimensions.y + dimensions.h and d.h + dostep < dimensions.h then
+  elseif d.y + d.h >= dimensions.y + dimensions.h - allowedPixelOffset and d.h + dostep < dimensions.h then
     local newY = d.y - dostep
     local newH = d.h + dostep
     return {
@@ -97,7 +102,7 @@ function resize.up(d)
         h = newH,
         w = d.w,
     }
-  elseif d.y + d.h == dimensions.y + dimensions.h then
+  elseif d.y + d.h >= dimensions.y + dimensions.h - allowedPixelOffset then
     local newY = dimensions.y + dimensions.h - dostep
     local newH = dostep
     return {
@@ -127,7 +132,7 @@ function resize.right(d)
   local dimensions = monitors.get_screen_dimensions(screen)
   local dostep = math.ceil(dimensions.w / horizontalSplits)
 
-  if d.x == 0 and d.w + dostep < dimensions.w then
+  if d.x == dimensions.x and d.w + dostep < dimensions.w then
     local newW = d.w + dostep
     return {
         x = d.x,
@@ -135,7 +140,7 @@ function resize.right(d)
         h = d.h,
         w = newW,
     }
-  elseif d.x == 0 then
+  elseif d.x == dimensions.x then
     local newW = dostep
     return {
         x = d.x,
@@ -143,7 +148,7 @@ function resize.right(d)
         h = d.h,
         w = newW,
     }
-  elseif d.x + d.w == dimensions.w and d.x + dostep < dimensions.w then
+  elseif d.x + d.w >= dimensions.w - allowedPixelOffset and d.x + dostep < dimensions.w then
     local newX = d.x + dostep
     local newW = dimensions.w - newX
     return {
@@ -152,7 +157,7 @@ function resize.right(d)
         h = d.h,
         w = dimensions.w - newX,
     }
-  elseif d.x + d.w == dimensions.w then
+  elseif d.x + d.w >= dimensions.w - allowedPixelOffset then
     local newX = dostep
     local newW = dimensions.w - dostep
     return {
@@ -182,7 +187,7 @@ function resize.left(d)
   local dimensions = monitors.get_screen_dimensions(screen)
   local dostep = math.ceil(dimensions.w / horizontalSplits)
 
-  if d.x == 0 and d.w - dostep >= dostep then
+  if d.x == dimensions.x and d.w - dostep >= dostep then
     local newW = d.w - dostep
     return {
         x = d.x,
@@ -190,7 +195,7 @@ function resize.left(d)
         h = d.h,
         w = newW,
     }
-  elseif d.x == 0 then
+  elseif d.x == dimensions.x then
     local newW = dimensions.w - dostep
     return {
         x = d.x,
@@ -198,7 +203,7 @@ function resize.left(d)
         h = d.h,
         w = newW,
     }
-  elseif d.x + d.w == dimensions.w and d.x - dostep > 0 then
+  elseif d.x + d.w >= dimensions.x + dimensions.w - allowedPixelOffset and d.x - dostep > dimensions.x then
     local newX = d.x - dostep
     local newW = d.w + dostep
     return {
@@ -207,7 +212,7 @@ function resize.left(d)
         h = d.h,
         w = newW,
     }
-  elseif d.x + d.w == dimensions.w then
+  elseif d.x + d.w >= dimensions.x + dimensions.w - allowedPixelOffset then
     local newX = dimensions.w - dostep
     local newW = dimensions.w - newX
     return {

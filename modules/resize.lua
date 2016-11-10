@@ -4,8 +4,8 @@ local window = require 'hs.window'
 local resize = import('utils/resize')
 
 local function module_init()
-    local mash = config:get("slide.mash", { "cmd", "ctrl" })
-    local keys = config:get("slide.keys", {
+    local mash = config:get("resize.mash", { "cmd", "ctrl" })
+    local keys = config:get("resize.keys", {
         UP = "up",
         DOWN = "down",
         LEFT = "left",
@@ -28,7 +28,7 @@ local function module_init()
             local dimensions = win:focusedWindow():frame()
             local newframe = resize_fn(dimensions)
 
-            win:setFrameWithWorkarounds(newframe, 0)
+            win:setFrame(newframe, 0)
         end)
     end
 end
