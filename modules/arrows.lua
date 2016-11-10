@@ -36,7 +36,7 @@ local function module_init()
             local dimensions = monitors.get_screen_dimensions(screen)
             local newframe = position_fn(dimensions)
 
-            win:setFrame(newframe)
+            win:setFrame(newframe, 0)
         end)
 
     end
