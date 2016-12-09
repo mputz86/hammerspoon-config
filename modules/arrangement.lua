@@ -4,7 +4,7 @@ local fnutils = require 'hs.fnutils'
 local hotkey = require 'hs.hotkey'
 
 local find = import('utils/find')
-local monitors = import('utils/monitors').configured_monitors
+local monitors = import('utils/monitors')().configured_monitors
 local position = import('utils/position')
 
 local function get_window(arrangement_table)

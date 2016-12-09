@@ -4,7 +4,7 @@ local geometry = require 'hs.geometry'
 local mouse = require 'hs.mouse'
 
 local position = import('utils/position')
-local monitors = import('utils/monitors')
+local monitors = import('utils/monitors')()
 
 local function init_module()
     for id, monitor in pairs(monitors.configured_monitors) do

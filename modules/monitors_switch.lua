@@ -5,7 +5,7 @@ local mouse = require 'hs.mouse'
 local alert = require 'hs.alert'
 
 local position = import('utils/position')
-local monitors = import('utils/monitors')
+local monitors = import('utils/monitors')()
 
 local function init_module()
     local mash = config:get("monitors_switch.mash", { "ctrl", "shift", "cmd" })

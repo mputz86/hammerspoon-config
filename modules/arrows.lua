@@ -2,7 +2,7 @@ local hotkey = require 'hs.hotkey'
 local window = require 'hs.window'
 
 local position = import('utils/position')
-local monitors = import('utils/monitors')
+local monitors = import('utils/monitors')()
 
 local function module_init()
     local mash = config:get("arrows.mash", { "cmd", "ctrl", "alt" })
