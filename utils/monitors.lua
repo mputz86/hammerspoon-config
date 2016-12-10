@@ -1,6 +1,5 @@
 local fnutils = require 'hs.fnutils'
 local screen = require 'hs.screen'
-local alert = require 'hs.alert'
 
 local dimensions__proto = {}
 local dimensions__mt = { __index = dimensions__proto }
@@ -117,14 +116,12 @@ function get_monitors()
 
     if config:get("monitors.autodiscover", false) then
         monitors.configured_monitors = autodiscover_monitors(config:get("monitors.rows", 1))
-        alert.show("!! " .. #monitors.configured_monitors)
     else
         for i, v in ipairs(config:get("monitors", {})) do
             monitors.configured_monitors[i] = {
                 dimensions = get_screen_dimensions_at_index(v)
             }
         end
-        alert.show("!! " .. #monitors.configured_monitors)
     end
 
     return monitors
