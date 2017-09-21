@@ -23,12 +23,12 @@ function dimensions__proto:relative_window_position(win)
     local screen = win:screen()
     local screenframe = screen:frame()
 
-    return self:relative_to({
-        w = frame.w,
-        h = frame.h,
-        x = frame.x - screenframe.x,
-        y = frame.y - screenframe.y,
-    })
+    return {
+        w = (frame.w / screenframe.w) * self.w,
+        h = (frame.h / screenframe.h) * self.h,
+        x = self.x + ((frame.x - screenframe.x) / screenframe.w) * self.w,
+        y = self.y + ((frame.y - screenframe.y) / screenframe.h) * self.h,
+    }
 
 end
 
