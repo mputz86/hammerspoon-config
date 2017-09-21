@@ -90,7 +90,7 @@ local function autodiscover_monitors(rows)
 
     for _ = 1, rows do
         local monitors_in_row = fnutils.filter(screens, function(screen)
-            return screen:fullFrame().y == reference_screen_frame.y
+            return (screen:fullFrame().y - reference_screen_frame.y) < reference_screen_frame.h
         end)
 
         table.sort(monitors_in_row, function(a, b)
