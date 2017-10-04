@@ -24,13 +24,12 @@ local function init_module()
                 destinationMonitor = monitor
                 break
             end
-            --.. monitor.dimensions.x .. ", " .. monitor.dimensions.y)
             if frame.x >= monitor.dimensions.x and frame.x < monitor.dimensions.x + monitor.dimensions.w and frame.y >= monitor.dimensions.y and frame.y < monitor.dimensions.y + monitor.dimensions.h then
                 found = true
             end
         end
         if found then
-            win:setFrame(destinationMonitor.dimensions:relative_window_position(win))
+            win:setFrame(destinationMonitor.dimensions:relative_window_position(win), 0)
         end
     end)
 end
